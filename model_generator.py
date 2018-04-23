@@ -151,11 +151,11 @@ with tf.Session() as sess:
                 stop_early = 0
 
     # Saves the trained model for use in predictor.py
-    saver.save(sess, "./trained_model/trained_predictor")
+    #saver.save(sess, "./trained_model/trained_predictor")
 
     # the following is a test to see the functionality of the model
 
-    '''x_test = np.array([[1,100,110,90,85,90,60,4,95,109,105,75,85,56]])
+    x_test = np.array([[1,100,110,90,85,90,60,4,95,109,105,75,85,56]])
     x_test = pd.DataFrame(x_test)
     x_test = x_test.as_matrix()
     print(x_test)
@@ -163,7 +163,7 @@ with tf.Session() as sess:
     feed_dict = {
         x: x_test
         }
-    print(sess.run(y, feed_dict))'''
+    print(sess.run(y, feed_dict))
 
     print()
     print("Optimization Finished!")
