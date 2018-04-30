@@ -49,7 +49,7 @@ hidden_nodes2 = 20
 pkeep = tf.placeholder(tf.float32)
 
 # input
-x = tf.placeholder(tf.float32, [None, input_nodes])
+x = tf.placeholder(tf.float32, [None, input_nodes], name="x")
 
 # layer 1
 W1 = tf.Variable(tf.truncated_normal([input_nodes, hidden_nodes1], stddev=0.15))
@@ -65,7 +65,7 @@ y2 = tf.nn.relu(tf.matmul(y1, W2) + b2)
 # layer 3
 W3 = tf.Variable(tf.truncated_normal([hidden_nodes2, 1], stddev=0.15))
 b3 = tf.Variable(tf.zeros([1]))
-y3 = tf.nn.sigmoid(tf.matmul(y2, W3) + b3)
+y3 = tf.nn.sigmoid(tf.matmul(y2, W3) + b3, name="y3")
 
 # output
 y = y3
@@ -150,19 +150,20 @@ with tf.Session() as sess:
             else:
                 stop_early = 0
 
-    # Saves the trained model for use in predictor.py
+                # Saves the trained model for use in predictor.py
     #saver.save(sess, "./trained_model/trained_predictor")
 
     # the following is a test to see the functionality of the model
 
-    x_test = np.array([[1,100,110,90,85,90,60,4,95,109,105,75,85,56]])
+    x_test = np.array(
+        [[1, 100, 110, 90, 85, 90, 60, 4, 95, 109, 105, 75, 85, 56]])
     x_test = pd.DataFrame(x_test)
     x_test = x_test.as_matrix()
     print(x_test)
 
     feed_dict = {
         x: x_test
-        }
+    }
     print(sess.run(y, feed_dict))
 
     print()
