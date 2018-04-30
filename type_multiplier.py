@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # have separated into separate functions to reduce overhead
 def initialise_type_advantage_matrix():
     type_matrix = np.genfromtxt("data/type_chart.csv", delimiter=',')
@@ -32,8 +33,10 @@ def intialise_type_dictionary():
     return type_dictionary
 
 
-def find_type_multiplier(attacking_type_array, defending_type_array,
-                         type_dictionary, type_advantage_matrix):
+def find_type_multiplier(attacking_type_array, defending_type_array):
+    type_dictionary = intialise_type_dictionary()
+    type_advantage_matrix = initialise_type_advantage_matrix()
+
     multiplier = 1
 
     for attack_type in attacking_type_array:
