@@ -60,15 +60,16 @@ def generate_element_csv(row, pokemon_matrix):
 
 pokemon_matrix = generate_pokemon_matrix()
 
-with open('data/cleaned_data.csv', 'a', newline='') as cleaned_csvfile:
-    with open('data/combats.csv', 'rt') as raw_csvfile:
-        pokemon_reader = csv.reader(raw_csvfile, delimiter=',')
-        writer = csv.writer(cleaned_csvfile)
-        next(raw_csvfile)
-        for row in pokemon_reader:
-            row = [int(i) for i in row]
-            attributes = generate_element_csv(row, pokemon_matrix)
-            writer.writerow(attributes)
+if __name__ == "__main__":
+    with open('data/cleaned_data.csv', 'a', newline='') as cleaned_csvfile:
+        with open('data/combats.csv', 'rt') as raw_csvfile:
+            pokemon_reader = csv.reader(raw_csvfile, delimiter=',')
+            writer = csv.writer(cleaned_csvfile)
+            next(raw_csvfile)
+            for row in pokemon_reader:
+                row = [int(i) for i in row]
+                attributes = generate_element_csv(row, pokemon_matrix)
+                writer.writerow(attributes)
 
-    raw_csvfile.close()
-cleaned_csvfile.close()
+        raw_csvfile.close()
+    cleaned_csvfile.close()
