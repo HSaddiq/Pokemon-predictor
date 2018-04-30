@@ -19,8 +19,7 @@ def generate_pokemon_matrix():
 
 # takes row of combats, returns a list appropriate for appending to cleaned_data
 
-def generate_element_csv(row, pokemon_matrix,
-                         type_dictionary, type_advantage_matrix):
+def generate_element_csv(row, pokemon_matrix):
     first_pokemon_attr = [i for i in pokemon_matrix[row[0] - 1]]
     second_pokemon_attr = [i for i in pokemon_matrix[row[1] - 1]]
     winner_id = row[2]
@@ -33,7 +32,7 @@ def generate_element_csv(row, pokemon_matrix,
     defense_array = list(filter(None, second_pokemon_attr[2:4]))
 
     attacking_type_multiplier = type_multiplier.find_type_multiplier(
-        attack_array, defense_array, type_dictionary, type_advantage_matrix)
+        attack_array, defense_array)
     output_list.append(attacking_type_multiplier)
 
     # append relevant first pokemon attribute
@@ -41,7 +40,7 @@ def generate_element_csv(row, pokemon_matrix,
 
     # finding the defending type multiplier
     defending_type_multiplier = type_multiplier.find_type_multiplier(
-        defense_array, attack_array, type_dictionary, type_advantage_matrix)
+        defense_array, attack_array)
     output_list.append(defending_type_multiplier)
 
     # append relevant second pokemon attributes
@@ -60,8 +59,6 @@ def generate_element_csv(row, pokemon_matrix,
 
 
 pokemon_matrix = generate_pokemon_matrix()
-type_dictionary = type_multiplier.intialise_type_dictionary()
-type_advantage_matrix = type_multiplier.initialise_type_advantage_matrix()
 
 with open('data/cleaned_data.csv', 'a', newline='') as cleaned_csvfile:
     with open('data/combats.csv', 'rt') as raw_csvfile:
@@ -70,11 +67,8 @@ with open('data/cleaned_data.csv', 'a', newline='') as cleaned_csvfile:
         next(raw_csvfile)
         for row in pokemon_reader:
             row = [int(i) for i in row]
-            attributes = generate_element_csv(row, pokemon_matrix,
-                         type_dictionary, type_advantage_matrix)
+            attributes = generate_element_csv(row, pokemon_matrix)
             writer.writerow(attributes)
 
     raw_csvfile.close()
 cleaned_csvfile.close()
-
-
